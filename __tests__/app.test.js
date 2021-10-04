@@ -77,6 +77,14 @@ describe('demo routes', () => {
           { id: expect.any(Number), name: 'Velociraptor', color: 'Grey', type: 'Dinosaur' }]);
       });
   });
+  it('should update an animal using a PUT route', () => {
+    return request(app)
+      .put('/api/animals/1')
+      .send({ name: 'Golden-Retriever', color: 'Golden-Brown', species_id: 1 })
+      .then((response) => {
+        expect(response.body).toEqual({ id: expect.any(Number), name: 'Golden-Retriever', color: 'Golden-Brown', species_id: 1 });
+      });
+  });
   
   afterAll(() => {
     pool.end();
