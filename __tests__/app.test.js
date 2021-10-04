@@ -17,6 +17,16 @@ describe('demo routes', () => {
       })
     );
   });
+  beforeEach(async () => {
+    const data = [{ name: 'Retriever', color: 'Yellow', species_id: 1 }, { name: 'T-rex', color: 'Brown', species_id: 3 }, { name: 'Velociraptor', color: 'Grey', species_id: 3 }];
+    await Promise.all(
+      data.map(item => {
+        return request(app)
+          .post('/api/animals')
+          .send(item);
+      })
+    );
+  });
 
   it('should add a new species using POST route', () => {
     return request(app)
@@ -40,7 +50,14 @@ describe('demo routes', () => {
       .post('/api/animals')
       .send({ name: 'Polar Bear', color: 'White', species_id: 2 })
       .then((response) => {
-        expect(response.body).toEqual({ id: 1, name: 'Polar Bear', color: 'White', species_id: 2 });
+        expect(response.body).toEqual({ id: expect.any(Number), name: 'Polar Bear', color: 'White', species_id: 2 });
+      });
+  });
+  it('should return an animal by its id', () => {
+    return request(app)
+      .get('api/animals/2')
+      .then(response => {
+        expect(response.body).toEqual({ id: expect.any(Number), name: 'T-rex', color: 'Brown', species_id: 3 });
       });
   });
   
