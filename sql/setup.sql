@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS species;
+
+CREATE TABLE species (
+    id SERIAL PRIMARY KEY,
+    type TEXT NOT NULL,
+    extinct BOOLEAN NOT NULL
+)
