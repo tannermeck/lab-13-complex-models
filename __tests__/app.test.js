@@ -72,9 +72,9 @@ describe('demo routes', () => {
     return request(app)
       .get('/api/animals/categories')
       .then(response => {
-        expect(response.body).toEqual({ id: expect.any(Number), name: 'Retriever', color: 'Yellow', type: 'Dogs' },
+        expect(response.body).toEqual([{ id: expect.any(Number), name: 'Retriever', color: 'Yellow', type: 'Dogs' },
           { id: expect.any(Number), name: 'T-rex', color: 'Brown', type: 'Dinosaur' },
-          { id: expect.any(Number), name: 'Velociraptor', color: 'Grey', type: 'Dinosaur' });
+          { id: expect.any(Number), name: 'Velociraptor', color: 'Grey', type: 'Dinosaur' }]);
       });
   });
   
