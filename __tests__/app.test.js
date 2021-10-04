@@ -7,25 +7,29 @@ describe('demo routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
+
   beforeEach(async () => {
-    const data = [{ type: 'Dogs', extinct: false }, { type: 'Bear', extinct: false }, { type: 'Dinosaur', extinct: true }];
-    await Promise.all(
-      data.map(item => {
-        return request(app)
-          .post('/api/species')
-          .send(item);
-      })
-    );
+    await request(app)
+      .post('/api/species')
+      .send({ type: 'Dogs', extinct: false });
+    await request(app)
+      .post('/api/species')
+      .send({ type: 'Bear', extinct: false });
+    return request(app)
+      .post('/api/species')
+      .send({ type: 'Dinosaur', extinct: true });
   });
+
   beforeEach(async () => {
-    const data = [{ name: 'Retriever', color: 'Yellow', species_id: 1 }, { name: 'T-rex', color: 'Brown', species_id: 3 }, { name: 'Velociraptor', color: 'Grey', species_id: 3 }];
-    await Promise.all(
-      data.map(item => {
-        return request(app)
-          .post('/api/animals')
-          .send(item);
-      })
-    );
+    await request(app)
+      .post('/api/animals')
+      .send({ name: 'Retriever', color: 'Yellow', species_id: 1 });
+    await request(app)
+      .post('/api/animals')
+      .send({ name: 'T-rex', color: 'Brown', species_id: 3 });
+    return request(app)
+      .post('/api/animals')
+      .send({ name: 'Velociraptor', color: 'Grey', species_id: 3 });
   });
 
   it('should add a new species using POST route', () => {
@@ -36,6 +40,7 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: expect.any(Number), type: 'Monkey', extinct: false });
       });
   });
+  
   it('should return all the species using a GET route', () => {
     return request(app)
       .get('/api/species')
@@ -45,6 +50,8 @@ describe('demo routes', () => {
           { id: expect.any(Number), type: 'Dinosaur', extinct: true }]);
       });
   });
+
+  
   it('should add a new animal using a POST route', () => {
     return request(app)
       .post('/api/animals')
@@ -53,9 +60,10 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: expect.any(Number), name: 'Polar Bear', color: 'White', species_id: 2 });
       });
   });
+
   it('should return an animal by its id', () => {
     return request(app)
-      .get('api/animals/2')
+      .get('/api/animals/2')
       .then(response => {
         expect(response.body).toEqual({ id: expect.any(Number), name: 'T-rex', color: 'Brown', species_id: 3 });
       });
