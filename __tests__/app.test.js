@@ -44,7 +44,6 @@ describe('demo routes', () => {
       });
   });
   
-
   afterAll(() => {
     pool.end();
   });
