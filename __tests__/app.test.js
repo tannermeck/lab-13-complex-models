@@ -68,6 +68,15 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: expect.any(Number), name: 'T-rex', color: 'Brown', species_id: 3 });
       });
   });
+  it('should return all animals and include their species', () => {
+    return request(app)
+      .get('/api/animals/categories')
+      .then(response => {
+        expect(response.body).toEqual({ id: expect.any(Number), name: 'Retriever', color: 'Yellow', type: 'Dogs' },
+          { id: expect.any(Number), name: 'T-rex', color: 'Brown', type: 'Dinosaur' },
+          { id: expect.any(Number), name: 'Velociraptor', color: 'Grey', type: 'Dinosaur' });
+      });
+  });
   
   afterAll(() => {
     pool.end();
