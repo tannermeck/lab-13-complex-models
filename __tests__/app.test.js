@@ -92,6 +92,13 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: 3, name: 'Velociraptor', color: 'Grey', species_id: 3 });
       });
   });
+  it('should return a count of animals within a given species', () => {
+    return request(app)
+      .get('/api/animals/species-count')
+      .then((response) => {
+        expect(response.body).toEqual([{ type: 'Dogs', count: 1 }, { type: 'Dinosaur', count: 2 }]);
+      });
+  });
   
   afterAll(() => {
     pool.end();
