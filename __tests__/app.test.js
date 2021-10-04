@@ -35,6 +35,15 @@ describe('demo routes', () => {
           { id: expect.any(Number), type: 'Dinosaur', extinct: true }]);
       });
   });
+  it('should add a new animal using a POST route', () => {
+    return request(app)
+      .post('/api/animals')
+      .send({ name: 'Polar Bear', color: 'White', species_id: 2 })
+      .then((response) => {
+        expect(response.body).toEqual({ id: 1, name: 'Polar Bear', color: 'White', species_id: 2 });
+      });
+  });
+  
 
   afterAll(() => {
     pool.end();
