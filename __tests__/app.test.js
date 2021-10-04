@@ -7,7 +7,17 @@ describe('demo routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  
+  beforeEach(async () => {
+    const data = [{ type: 'Dogs', extinct: false }, { type: 'Bear', extinct: false }, { type: 'Dinosaur', extinct: true }];
+    await Promise.all(
+      data.map(item => {
+        return request(app)
+          .post('/api/species')
+          .send(item);
+      })
+    );
+  });
+
   it('should add a new species using POST route', () => {
     return request(app)
       .post('/api/species')
@@ -16,6 +26,16 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: expect.any(Number), type: 'Monkey', extinct: false });
       });
   });
+  it('should return all the species using a GET route', () => {
+    return request(app)
+      .get('/api/species')
+      .then((response) => {
+        expect(response.body).toEqual([{ id: expect.any(Number), type: 'Dogs', extinct: false }, 
+          { id: expect.any(Number), type: 'Bear', extinct: false }, 
+          { id: expect.any(Number), type: 'Dinosaur', extinct: true }]);
+      });
+  });
+
   afterAll(() => {
     pool.end();
   });
