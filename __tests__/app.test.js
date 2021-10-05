@@ -107,7 +107,7 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: 3, type: 'Dinosaur', extinct: false });
       });
   });
-  it('should update a species with a PATCH route', () => {
+  it('should get all species who a non-extinct', () => {
     return request(app)
       .get('/api/species/non-extinct')
       .then((response) => {
