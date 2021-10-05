@@ -99,7 +99,14 @@ describe('demo routes', () => {
         expect(response.body).toEqual([{ type: 'Dogs', count: '1' }, { type: 'Dinosaur', count: '2' }]);
       });
   });
-  
+  it('should update a species with a PATCH route', () => {
+    return request(app)
+      .patch('/api/species/1')
+      .send({ extinct: false })
+      .then((response) => {
+        expect(response.body).toEqual({ id: 3, type: 'Dinosaur', extinct: false });
+      });
+  });
 
   afterAll(() => {
     pool.end();
