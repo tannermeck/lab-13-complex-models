@@ -96,10 +96,11 @@ describe('demo routes', () => {
     return request(app)
       .get('/api/animals/species-count')
       .then((response) => {
-        expect(response.body).toEqual([{ type: 'Dogs', count: 1 }, { type: 'Dinosaur', count: 2 }]);
+        expect(response.body).toEqual([{ type: 'Dogs', count: '1' }, { type: 'Dinosaur', count: '2' }]);
       });
   });
   
+
   afterAll(() => {
     pool.end();
   });
