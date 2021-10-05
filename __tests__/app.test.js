@@ -101,7 +101,7 @@ describe('demo routes', () => {
   });
   it('should update a species with a PATCH route', () => {
     return request(app)
-      .patch('/api/species/1')
+      .patch('/api/species/3')
       .send({ extinct: false })
       .then((response) => {
         expect(response.body).toEqual({ id: 3, type: 'Dinosaur', extinct: false });
