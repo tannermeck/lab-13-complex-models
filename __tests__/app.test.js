@@ -107,6 +107,13 @@ describe('demo routes', () => {
         expect(response.body).toEqual({ id: 3, type: 'Dinosaur', extinct: false });
       });
   });
+  it('should update a species with a PATCH route', () => {
+    return request(app)
+      .get('/api/species/non-extinct')
+      .then((response) => {
+        expect(response.body).toEqual([{ id: expect.any(Number), type: 'Dogs', extinct: false }, { id: expect.any(Number), type: 'Bear', extinct: false }]);
+      });
+  });
 
   afterAll(() => {
     pool.end();
